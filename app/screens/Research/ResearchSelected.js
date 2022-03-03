@@ -15,7 +15,9 @@ const DATA = [
     { id: 2, description: "Formulario", date: "Llenado de formularios", color: '#e2e2e2', icon: "newspaper", nav: false }
 ];
 
-export default function ResearchSelected() {
+export default function ResearchSelected(props) {
+
+    console.log(props);
 
     const navigation = useNavigation();
     return (

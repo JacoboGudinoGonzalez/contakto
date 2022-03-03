@@ -10,18 +10,21 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 
+import Loading from "../../components/Loading";
+
 import ResearchList from "../../components/Research/ResearchList";
 
 export default function Research() {
 
     const [researchList, setResearchList] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         AsyncStorage.getItem("userData").then(res => {
+            setLoading(true);
             var json = JSON.parse(res);
             var token = json.access_token;
             if (token) {
-
                 var myHeaders = new Headers();
                 myHeaders.append("Authorization", "Bearer " + token);
 
@@ -34,14 +37,20 @@ export default function Research() {
                 fetch("http://contakto.daangu.com/api/investigacion/list/", requestOptions)
                     .then(response => response.json())
                     .then(result => {
+                        setLoading(false);
                         if (result.message) {
                             setResearchList(result.data);
                         } else {
                             Alert.alert("No hay datos");
                         }
+
                     })
-                    .catch(error => console.log('error', error));
+                    .catch(error => {
+                        setLoading(false);
+                        console.log('error', error)
+                    });
             } else {
+                setLoading(false);
                 setLogin(false);
             }
         })
@@ -60,6 +69,7 @@ export default function Research() {
                 </View>
             </View>
             <ResearchList researchList={researchList} />
+            <Loading isVisible={loading} text="Cargando.." />
         </SafeAreaView>
     );
 };
@@ -95,5 +105,9 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         borderBottomColor: '#FFFFFF',
         flex: 1,
-    }
+    },
+    inputIcon: {
+        marginLeft: 15,
+        justifyContent: 'center'
+    },
 });  

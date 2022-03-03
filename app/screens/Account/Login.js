@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Divider } from "react-native-elements";
@@ -7,6 +8,25 @@ import LoginForm from "../../components/Account/LoginForm";
 import Toast from "react-native-easy-toast";
 
 export default function Login() {
+
+    const [login, setLogin] = useState(null);
+    const [user, setUser] = useState(null);
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        AsyncStorage.getItem("userData").then(res => {
+            var json = JSON.parse(res);
+            var token = json.access_token;
+            if (token) {
+                setLogin(true);
+                setUser(token);
+                navigation.navigate("home");
+            } else {
+                debugger
+                setLogin(false);
+            }
+        })
+    }, []);
 
     const toastRef = useRef();
     return (

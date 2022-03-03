@@ -6,7 +6,6 @@ import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/validation";
 import { size, isEmpty } from "lodash";
 import { useNavigation } from "@react-navigation/native"
-import { StackActions } from '@react-navigation/native';
 
 export default function LoginForm(props) {
     const { toastRef } = props;
