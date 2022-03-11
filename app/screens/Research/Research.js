@@ -7,17 +7,19 @@ import {
     TextInput,
     SafeAreaView
 } from 'react-native';
+import { useNavigation } from "@react-navigation/native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from "@react-navigation/native";
-
 import Loading from "../../components/Loading";
-
 import ResearchList from "../../components/Research/ResearchList";
+import { Url } from "../../utils/global";
 
 export default function Research() {
-
     const [researchList, setResearchList] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const urlGlobal = Url;
+
+    const navigation = useNavigation();
 
     useEffect(() => {
         AsyncStorage.getItem("userData").then(res => {
@@ -34,7 +36,7 @@ export default function Research() {
                     redirect: 'follow'
                 };
 
-                fetch("http://contakto.daangu.com/api/investigacion/list/", requestOptions)
+                fetch(urlGlobal + "api/investigacion/list/", requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         setLoading(false);
@@ -47,11 +49,10 @@ export default function Research() {
                     })
                     .catch(error => {
                         setLoading(false);
-                        console.log('error', error)
+                        navigation.navigate("home");
                     });
             } else {
                 setLoading(false);
-                setLogin(false);
             }
         })
     }, []);

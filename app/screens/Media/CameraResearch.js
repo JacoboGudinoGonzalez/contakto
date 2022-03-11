@@ -22,7 +22,6 @@ export default function CameraResearch({ navigation }) {
         const imagePermission = await ImagePicker.getMediaLibraryPermissionsAsync({
             allowsEditing: true,
         });
-        console.log(imagePermission.status);
 
         setGalleryPermission(imagePermission.status === 'granted');
 
@@ -56,7 +55,6 @@ export default function CameraResearch({ navigation }) {
             });
             this.setState({ photoId: this.state.photoId + 1 });
             Vibration.vibrate();
-            console.log(photo.uri);
             setImageUri(photo.uri);
         }
     };
@@ -69,12 +67,8 @@ export default function CameraResearch({ navigation }) {
             quality: 1,
 
         });
-
-        //console.log(result);
-        console.log(pickImage);
         if (!result.cancelled) {
             setImageUri(result.uri);
-            console.log(imageUri)
         }
     };
 

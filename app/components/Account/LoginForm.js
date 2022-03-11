@@ -6,6 +6,7 @@ import { Input, Icon, Button } from "react-native-elements";
 import { validateEmail } from "../../utils/validation";
 import { size, isEmpty } from "lodash";
 import { useNavigation } from "@react-navigation/native"
+import { Url } from '../../utils/global';
 
 export default function LoginForm(props) {
     const { toastRef } = props;
@@ -13,6 +14,8 @@ export default function LoginForm(props) {
     const [formData, setFormData] = useState(defaultFormValue);
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+
+    const urlGlobal = Url;
 
     const onSubmit = () => {
         if (isEmpty(formData.email) || isEmpty(formData.password)) {
@@ -38,7 +41,7 @@ export default function LoginForm(props) {
             }
             formBody = formBody.join('&');
 
-            fetch('http://contakto.daangu.com/api/auth/token/', {
+            fetch(urlGlobal + 'api/auth/token/', {
                 method: 'POST',
                 body: formBody,
                 headers: {

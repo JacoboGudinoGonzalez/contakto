@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -8,7 +8,6 @@ import {
     FlatList
 } from 'react-native';
 import { Icon } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 
 const DATA = [
     { id: 1, description: "Adjuntos", date: "Fotografías de documentos requeridos", color: 'white', icon: "attachment", nav: true },
@@ -17,9 +16,12 @@ const DATA = [
 
 export default function ResearchSelected(props) {
 
-    console.log(props);
+    const { navigation, route } = props;
+    const { id, name } = route.params;
+    const [research, setResearch] = useState(null);
 
-    const navigation = useNavigation();
+    navigation.setOptions({ title: name });
+
     return (
 
         <View style={styles.container}>
@@ -33,7 +35,7 @@ export default function ResearchSelected(props) {
                 }}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity style={[styles.card, { backgroundColor: item.color }]} onPress={() => { item.nav ? navigation.navigate("research-detail") : false }}>
+                        <TouchableOpacity style={[styles.card, { backgroundColor: item.color }]} onPress={() => { item.nav ? navigation.navigate("research-detail", { id }) : false }}>
                             <Icon
                                 type="material-community"
                                 name={item.icon}
@@ -69,29 +71,23 @@ const styles = StyleSheet.create({
     },
     cardContent: {
         marginLeft: 20,
-        marginTop: 10,
     },
     image: {
-        width: 40,
-        height: 40
+        width: '100%'
     },
 
     card: {
-
         marginVertical: 10,
         marginHorizontal: 20,
         backgroundColor: "white",
         padding: 10,
         flexDirection: 'row',
-        flexWrap: 'wrap',
         borderLeftWidth: 6,
-
         borderRadius: 10
     },
 
     description: {
         fontSize: 18,
-        flex: 1,
         color: "#008080",
         fontWeight: 'bold',
     },

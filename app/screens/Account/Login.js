@@ -13,6 +13,8 @@ export default function Login() {
     const [user, setUser] = useState(null);
     const navigation = useNavigation();
 
+    debugger
+
     useEffect(() => {
         AsyncStorage.getItem("userData").then(res => {
             var json = JSON.parse(res);

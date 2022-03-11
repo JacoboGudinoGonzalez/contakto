@@ -26,7 +26,7 @@ export default function UserLogged() {
     const navigation = useNavigation();
     return (
         <View>
-            <Text><Text>{user}</Text></Text>
+            <Text><Text></Text></Text>
             <Button title="Cerrar sesión"
                 buttonStyle={styles.btnStyle}
                 containerStyle={styles.btnContainer}

@@ -217,7 +217,6 @@ class ImageCropOverlay extends React.Component {
 
     // We were granted responder status! Let's update the UI
     handlePanResponderGrant = (event) => {
-        // console.log(event.nativeEvent.locationX + ', ' + event.nativeEvent.locationY)
 
         const selectedItem = this.getTappedItem(event.nativeEvent.pageX, event.nativeEvent.pageY)
         if (selectedItem == 'tl') {

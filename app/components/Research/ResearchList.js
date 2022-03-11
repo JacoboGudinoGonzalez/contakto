@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     Image,
     Alert,
-    FlatList
+    FlatList,
+    Linking
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Divider, Icon, Button } from "react-native-elements";
@@ -22,16 +23,16 @@ export default function ResearchList(props) {
         <FlatList
             style={styles.notificationList}
             data={researchList}
-            renderItem={(item) => <Investigaciones item={item} />}
+            renderItem={(item) => <Investigaciones item={item} navigation={navigation} />}
             keyExtractor={(item, index) => index.toString()}
         />
     )
 }
 
 function Investigaciones(props) {
-    const { item } = props;
-
-    const { candidato, telefono, direccion, compania, sucursal, agente } = item.item;
+    const { item, navigation } = props;
+    debugger
+    const { id, candidato, telefono, direccion, compania, sucursal, agente } = item.item;
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [renderComponent, setRenderComponent] = useState(null);
@@ -45,20 +46,25 @@ function Investigaciones(props) {
                         <Divider />
                         <Text style={styles.modalLabel}>Sucursal</Text><Text style={styles.modalText}>{obj[1].nombre}</Text>
                         <Divider />
-                        <Text style={styles.modalLabel}>Agente</Text>
+                        <Text style={styles.modalLabel}>Asesor</Text>
                         <Text style={styles.modalText}>{obj[2].first_name} {obj[2].last_name}</Text>
-                        <Text style={styles.modalText}>{obj[2].email}</Text>
+                        <TouchableOpacity onPress={() => Linking.openURL(`mailto:${obj[2].email}`)}>
+                            <Text style={styles.modalTextLink}>{obj[2].email}</Text>
+                        </TouchableOpacity>
+
                         <Divider />
                     </View>
                 )
                 break;
             case "iPhone":
                 setRenderComponent(
-                    map(obj[0], (t) => {
+                    map(obj[0], (t, i) => {
                         return (
-                            <View>
+                            <View key={i}>
                                 <Text style={styles.modalLabel}>{t.categoria == 'casa' ? 'Casa' : t.categoria == 'movil' ? 'Móvil' : 'Recados'}</Text>
-                                <Text style={styles.modalText}>{t.numero}</Text>
+                                <TouchableOpacity onPress={() => Linking.openURL(`tel:${t.numero}`)}>
+                                    <Text style={styles.modalTextLink}>{t.numero}</Text>
+                                </TouchableOpacity>
                                 <Divider />
                             </View>
                         )
@@ -72,11 +78,11 @@ function Investigaciones(props) {
                             <View>
                                 <Text style={styles.modalLabel}>Calle</Text><Text style={styles.modalText}>{t.calle}</Text>
                                 <Divider />
-                                <Text style={styles.modalLabel}>Ciudad</Text><Text style={styles.modalText}>{t.ciudad}</Text>
-                                <Divider />
                                 <Text style={styles.modalLabel}>Colonia</Text><Text style={styles.modalText}>{t.colonia}</Text>
                                 <Divider />
                                 <Text style={styles.modalLabel}>C.P.</Text><Text style={styles.modalText}>{t.cp}</Text>
+                                <Divider />
+                                <Text style={styles.modalLabel}>Ciudad</Text><Text style={styles.modalText}>{t.ciudad}</Text>
                                 <Divider />
                                 <Text style={styles.modalLabel}>Estado</Text><Text style={styles.modalText}>{t.estado}</Text>
                                 <Divider />
@@ -95,7 +101,8 @@ function Investigaciones(props) {
     return (
         <TouchableOpacity style={[styles.card, { borderColor: 'black' }]}
             onPress={() => navigation.navigate("research-selected", {
-                item
+                id: id,
+                name: candidato.nombre + ' ' + candidato.apellido
             })}>
             <View style={styles.cardContent}>
                 <View style={styles.contact}>
@@ -137,18 +144,6 @@ function Investigaciones(props) {
 
         </TouchableOpacity>
     );
-}
-
-function telefonos(data) {
-    return map(data, (t) => {
-        return (
-            <View>
-                <Text style={styles.modalLabel}>{t.categoria == 'casa' ? 'Casa' : t.categoria == 'movil' ? 'Móvil' : 'Recados'}</Text>
-                <Text style={styles.modalText}>{t.numero}</Text>
-                <Divider />
-            </View>
-        )
-    });
 }
 
 const styles = StyleSheet.create({
@@ -228,6 +223,7 @@ const styles = StyleSheet.create({
     },
     modalLabel: { color: 'black', fontWeight: 'bold', marginTop: 5, marginBottom: 5 },
     modalText: { color: 'black', marginBottom: 5 },
+    modalTextLink: { color: 'blue', marginBottom: 5, textDecorationLine: 'underline' },
     buttonsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
