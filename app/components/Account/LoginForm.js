@@ -41,7 +41,7 @@ export default function LoginForm(props) {
             }
             formBody = formBody.join('&');
 
-            fetch(urlGlobal + 'api/auth/token/', {
+            fetch(urlGlobal + '/api/auth/token/', {
                 method: 'POST',
                 body: formBody,
                 headers: {
@@ -88,6 +88,7 @@ export default function LoginForm(props) {
     return (
         <View style={styles.formContainer}>
             <Input
+                autoCapitalize='none'
                 placeholder="Correo electrónico"
                 containerStyle={styles.inputForm}
                 onChange={e => onChange(e, "email")}
@@ -100,6 +101,7 @@ export default function LoginForm(props) {
                 }
             />
             <Input
+                autoCapitalize='none'
                 placeholder='Contraseña'
                 containerStyle={styles.inputForm}
                 password={true}

@@ -5,12 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import Loading from '../../components/Loading';
 import { Url } from '../../utils/global';
+import ProgressiveImage from '../../utils/ProgressiveImage'
 
 export default function GalleryResearch(props) {
     const { navigation, route } = props;
     const { id, url, inv } = route.params;
     var title = name(id.toString());
-
     const urlGlobal = Url;
 
     const [loading, setLoading] = useState(false);
@@ -32,7 +32,9 @@ export default function GalleryResearch(props) {
             base64: true,
             //aspect: [4, 3],
             quality: 1,
+
         });
+        //result.name = 'adj' + " id " + ".jpg";
         setResultImage(result);
 
         if (!result.cancelled) {
@@ -55,6 +57,7 @@ export default function GalleryResearch(props) {
             alert("You've refused to allow this appp to access your camera!");
             return;
         }
+        //result.name = 'adj' + " id " + ".jpg";
         setResultImage(result);
         if (!result.cancelled) {
             setPickedImagePath(result.uri);
@@ -62,8 +65,6 @@ export default function GalleryResearch(props) {
     }
 
     const enviar = async () => {
-
-        //console.log("ressss: ", resultImage);
         AsyncStorage.getItem("userData").then(res => {
             setLoading(true);
             debugger
@@ -74,19 +75,9 @@ export default function GalleryResearch(props) {
                 myHeaders.append("Authorization", "Bearer " + token);
 
                 var formdata = new FormData();
-                //formdata.append("file", resultImage);
 
-                formdata.append('file', resultImage.base64);
-
-                //console.log(formdata);
-                // const formdata = new FormData();
-                // formdata.append('file', {
-                //     name: "adj" + id + ".jpg",
-                //     type: "image",
-                //     uri: Platform.OS === 'ios' ?
-                //         resultImage.uri.replace('file://', '')
-                //         : resultImage.uri,
-                // });
+                formdata.append('file', { uri: resultImage.uri, name: "filename.jpg", type: "image/jpeg" });
+                //formdata.append("file", resultImage)
 
                 var requestOptions = {
                     method: 'PUT',
@@ -95,12 +86,11 @@ export default function GalleryResearch(props) {
                     redirect: 'follow'
                 };
 
-                fetch(urlGlobal + "api/investigacion/adjunto/upload/?inv=" + inv + "&column_no=" + id, requestOptions)
+                fetch(urlGlobal + "/api/investigacion/adjunto/upload/?inv=" + inv + "&column_no=" + id, requestOptions)
                     .then(response => response.text())
                     .then(result => {
-                        console.log(result);
                         setLoading(false);
-                        navigation.navigate("research-detail", { id });
+                        navigation.navigate("research-detail", { id: inv });
                     })
                     .catch(error => {
                         console.log('error', error);
@@ -127,13 +117,18 @@ export default function GalleryResearch(props) {
                     />
                 }
                 {
-                    url != null && pickedImagePath == '' ? <Image
-                        source={{ uri: urlGlobal + url }}
-                        style={styles.image}
-                    /> : <View></View>
+                    url != null && pickedImagePath == '' ?
+
+                        <ProgressiveImage
+                            source={{ uri: urlGlobal + url }}
+                            style={styles.image}
+                        />
+                        : <View></View>
                 }
             </View>
-            {resultImage ? (<Button title="enviar" onPress={enviar} />) : <View></View>}
+            {
+                resultImage ? !resultImage.cancelled ? (<Button title="enviar" onPress={enviar} />) : <View></View> : <View></View>
+            }
             <Loading isVisible={loading} text="Cargando.." />
         </View>
     );
@@ -254,8 +249,6 @@ function name(n) {
     return title;
 }
 
-// Kindacode.com
-// Just some styles
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
@@ -269,11 +262,11 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         margin: 10,
-        padding: 10,
-        width: '90%'
+        alignItems: 'center'
     },
     image: {
-        height: 500,
-        padding: 200
+        width: '90%',
+        height: undefined,
+        aspectRatio: 1,
     }
 });

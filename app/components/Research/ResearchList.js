@@ -20,12 +20,15 @@ export default function ResearchList(props) {
     const navigation = useNavigation();
 
     return (
-        <FlatList
-            style={styles.notificationList}
-            data={researchList}
-            renderItem={(item) => <Investigaciones item={item} navigation={navigation} />}
-            keyExtractor={(item, index) => index.toString()}
-        />
+        <View style={styles.container}>
+            <Text style={styles.text}>Investigaciones</Text>
+            <FlatList
+                style={styles.notificationList}
+                data={researchList}
+                renderItem={(item) => <Investigaciones item={item} navigation={navigation} />}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </View>
     )
 }
 
@@ -99,6 +102,7 @@ function Investigaciones(props) {
     };
 
     return (
+
         <TouchableOpacity style={[styles.card, { borderColor: 'black' }]}
             onPress={() => navigation.navigate("research-selected", {
                 id: id,
@@ -119,12 +123,12 @@ function Investigaciones(props) {
                         iconStyle={styles.iconRight}
                         onPress={() => selectedModal("iDirections", direccion)}
                     />
-                    <Icon
+                    {/* <Icon
                         type="material-community"
                         name="information"
                         iconStyle={styles.iconRight}
                         onPress={() => { Alert.alert("Información adicional"); }}
-                    />
+                    /> */}
 
                 </View>
                 {/* <Image style={[styles.image, styles.imageContent]} source={{ uri: item.icon }} /> */}
@@ -141,13 +145,24 @@ function Investigaciones(props) {
             <Modal isVisible={isModalVisible} setVisible={setModalVisible} >
                 {renderComponent}
             </Modal>
-
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        marginTop: 20,
+        backgroundColor: "#eeeeee"
+    },
+    text: {
+        fontSize: 19,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 40,
+        marginBottom: 20,
+        color: '#9d3b31'
+    },
     notificationList: {
         padding: 10,
     },

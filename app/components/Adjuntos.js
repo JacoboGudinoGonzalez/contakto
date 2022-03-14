@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Adjuntos(props) {
     const { docsList } = props;
-    console.log(docsList)
     const navigation = useNavigation();
     return (
         <View>
@@ -77,25 +76,25 @@ export default function Adjuntos(props) {
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 14, url: docsList.adj14, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj14 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>7.a Identificación con fotografia</Text>
+                    <Text style={[styles.description]}>7.a Identificación con fotografía</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 22, url: docsList.adj22, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj22 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>7.b Identificación con fotografia</Text>
+                    <Text style={[styles.description]}>7.b Identificación con fotografía</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 23, url: docsList.adj23, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj23 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>7.c Identificación con fotografia</Text>
+                    <Text style={[styles.description]}>7.c Identificación con fotografía</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 24, url: docsList.adj24, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj24 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>7.d Identificación con fotografia</Text>
+                    <Text style={[styles.description]}>7.d Identificación con fotografía</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 17, url: docsList.adj17, inv: docsList.investigacion }) }}>
@@ -143,13 +142,13 @@ export default function Adjuntos(props) {
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 7, url: docsList.adj7, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj7 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>11.a Validación de Demandas Laborales</Text>
+                    <Text style={[styles.description]}>11.a Demandas Laborales</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 36, url: docsList.adj36, inv: docsList.investigacion }) }}>
                 <Image style={styles.image} source={{ uri: docsList.adj36 != null ? "https://img.icons8.com/flat_round/64/000000/checkmark.png" : "https://img.icons8.com/flat_round/64/000000/delete-sign.png" }} />
                 <View>
-                    <Text style={[styles.description]}>11.b Validacion web</Text>
+                    <Text style={[styles.description]}>11.b Validación web</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.card]} onPress={() => { navigation.navigate("gallery-research", { id: 18, url: docsList.adj18, inv: docsList.investigacion }) }}>

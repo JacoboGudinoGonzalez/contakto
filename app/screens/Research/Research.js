@@ -36,7 +36,7 @@ export default function Research() {
                     redirect: 'follow'
                 };
 
-                fetch(urlGlobal + "api/investigacion/list/", requestOptions)
+                fetch(urlGlobal + "/api/investigacion/list/", requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         setLoading(false);
@@ -60,15 +60,6 @@ export default function Research() {
 
     return (
         <SafeAreaView style={styles.container}>
-
-            <View style={styles.formContent}>
-                <View style={styles.inputContainer}>
-                    <Image style={[styles.icon, styles.inputIcon]} source={{ uri: 'https://png.icons8.com/search/androidL/100/000000' }} />
-                    <TextInput style={styles.inputs}
-                        placeholder="Search"
-                        underlineColorAndroid='transparent' />
-                </View>
-            </View>
             <ResearchList researchList={researchList} />
             <Loading isVisible={loading} text="Cargando.." />
         </SafeAreaView>
